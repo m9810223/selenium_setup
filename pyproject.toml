@@ -1,0 +1,33 @@
+[tool.poetry]
+name = "selenium_setup"
+#
+authors = [" "]
+description = ""
+readme = "README.md"
+repository = "https://github.com/m9810223/selenium_setup"
+#
+packages = [
+  {include = "selenium_setup", from = "src"},
+]
+#
+version = "0.0.8"
+
+[tool.poetry.dependencies]
+python = ">=3.7,<4"
+#
+httpx = "*"
+rich = "*"
+typer = {extras = ["all"], version = "*"}
+xmltodict = "*"
+#
+# selenium = "*"
+#
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core>=1.0.0"]
+
+[tool.poetry.scripts]
+selenium_setup = "selenium_setup:main"
