@@ -31,7 +31,7 @@ class Chrome:
     os_mapping = {
         ('Linux', 'x86_64'): 'linux64',
         # (): 'mac64',
-        ('Darwin', 'arm64'): 'mac64_m1',
+        ('Darwin', 'arm64'): 'mac_arm64',
         ('Windows', 'AMD64'): 'win32',
     }
     list_url = 'https://chromedriver.storage.googleapis.com'

@@ -10,7 +10,7 @@ packages = [
   {include = "selenium_setup", from = "src"},
 ]
 #
-version = "0.0.8"
+version = "0.1.0"
 
 [tool.poetry.dependencies]
 python = ">=3.7,<4"
