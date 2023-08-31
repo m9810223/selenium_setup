@@ -6,20 +6,11 @@ from . import _drivers
 def _main(
     *,
     driver: str = typer.Argument(_drivers.Driver.CHROME.value),
-    ver: str = None,
-    list: bool = False,
+    ver: str = '',
 ):
-    if list:
-        return _list_vers(driver)
-
     if driver.lower() == _drivers.Driver.CHROME.value:
-        return _drivers.Chrome.download(ver)
-    raise RuntimeError
-
-
-def _list_vers(driver: str):
-    if driver.lower() == _drivers.Driver.CHROME.value:
-        return _drivers.Chrome.list_vers()
+        driver_zip = _drivers.Chrome.download_zip(version=ver)
+        return _drivers.Chrome.unzip(driver_zip=driver_zip)
     raise RuntimeError
 
 
@@ -31,7 +22,8 @@ def main():
         return
     except SystemExit:
         ...
-    except:
+    except Exception as e:
+        print(e)
         bug_report_link = 'https://github.com/m9810223/selenium_setup/issues'
         print(f'\n\n  >>> {bug_report_link = }\n')
 
