@@ -33,16 +33,19 @@ class Chrome:  # https://github.com/GoogleChromeLabs/chrome-for-testing
     }
 
     @classmethod
+    @property
+    def operating_system(cls):
+        operating_system = cls.os_mapping.get(get_os_info())
+        if operating_system is None:
+            raise RuntimeError
+        return operating_system
+
+    @classmethod
     def download_zip(cls, *, version: str = ''):
         version = version or httpx.get(cls.latest_release_url).text
         print(f'{cls.name} {version = }')
 
-        operating_system = cls.os_mapping.get(get_os_info())
-        if operating_system is None:
-            raise RuntimeError
-        print(f'{operating_system = }')
-
-        url = cls.link.format(version=version, operating_system=operating_system)
+        url = cls.link.format(version=version, operating_system=cls.operating_system)
         print(f'{url = }')
         driver_zip = CWD / url.rsplit('/', 1)[-1]
         driver_zip = driver_zip.with_stem(f'{driver_zip.stem}--{version}')
@@ -73,9 +76,11 @@ class Chrome:  # https://github.com/GoogleChromeLabs/chrome-for-testing
     @classmethod
     def unzip(cls, *, driver_zip: Path):
         with ZipFile(file=driver_zip) as z:
-            driver_info = [
-                x for x in z.filelist if x.filename.endswith('/chromedriver')
-            ][0]
+            driver_info = next(
+                x
+                for x in z.filelist
+                if f'chromedriver-{cls.operating_system}/chromedriver' in x.filename
+            )
             driver_file = CWD / driver_info.filename.split('/')[-1]
             driver_file.write_bytes(z.read(driver_info))
             curr_mod = driver_file.stat().st_mode
