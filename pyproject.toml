@@ -8,7 +8,7 @@ repository = "https://github.com/m9810223/selenium_setup"
 #
 packages = [{ include = "selenium_setup", from = "src" }]
 #
-version = "1.0.1"
+version = "1.1.0"
 
 [tool.poetry.dependencies]
 python = ">=3.7,<4"

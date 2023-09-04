@@ -81,7 +81,7 @@ class Chrome:  # https://github.com/GoogleChromeLabs/chrome-for-testing
                 for x in z.filelist
                 if f'chromedriver-{cls.operating_system}/chromedriver' in x.filename
             )
-            driver_file = CWD / driver_info.filename.split('/')[-1]
+            driver_file = CWD / 'chromedriver'
             driver_file.write_bytes(z.read(driver_info))
             curr_mod = driver_file.stat().st_mode
             all_x = stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH
